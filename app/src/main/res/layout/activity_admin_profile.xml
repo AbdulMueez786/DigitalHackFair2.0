@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AdminProfile"
+    android:background="#fff"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/backgound_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/Telenor_back" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="120dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="140dp"
+        android:id="@+id/imageCard"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="10dp"
+        android:layout_height="120dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/admin_pic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/profile"
+            android:padding="3dp" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/admin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/imageCard"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="225dp"
+        android:paddingBottom="30dp"
+        android:text="Abdul Mueez"
+        android:fontFamily="@font/nunito_semibold"
+        android:layout_marginLeft="10dp"
+        android:textSize="22dp" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintTop_toBottomOf="@id/imageCard"
+        android:layout_marginTop="2dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageCard"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/ic_baseline_edit_24" />
+
+    <TextView
+        android:id="@+id/admin_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="edit"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/imageCard"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageCard"
+        android:layout_marginLeft="55dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abdulmueezgujjar@gmail.com"
+        android:id="@+id/admin_email"
+        app:layout_constraintTop_toBottomOf="@+id/admin_edit_profile"
+        android:layout_marginTop="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:drawableLeft="@drawable/email"
+        android:drawablePadding="10dp"
+        android:drawableTint="#1DA1F2"
+        android:textSize="15sp"
+        android:fontFamily="@font/nunito_regular"
+        android:textColor="#5E5A5A" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0303-4799117"
+        android:id="@+id/admin_phone"
+        app:layout_constraintTop_toBottomOf="@+id/admin_email"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:drawableLeft="@drawable/phone"
+        android:drawablePadding="10dp"
+        android:drawableTint="#1DA1F2"
+        android:textSize="15sp"
+        android:fontFamily="@font/nunito_regular"
+        android:textColor="#5E5A5A" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
