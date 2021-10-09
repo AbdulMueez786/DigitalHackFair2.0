@@ -50,7 +50,8 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="100dp"
-                    android:src="@drawable/pic" />
+                    android:src="@drawable/pic"
+                    android:onClick="ShowPopup" />
             </RelativeLayout>
 
         </com.google.android.material.appbar.AppBarLayout>

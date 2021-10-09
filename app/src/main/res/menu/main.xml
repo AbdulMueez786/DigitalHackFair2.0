@@ -1,35 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#F5F8FA"
-    >
-    <item android:title="">
-        <menu>
-        <item
-            android:id="@+id/dor_profile"
-            android:title="Profile"
-            android:iconTint="#657786"
-            android:icon="@drawable/profile"
-            />
-        <item
-            android:id="@+id/dor_high_achiver"
-            android:title="high achiever"
-            android:iconTint="#657786"
-            android:icon="@drawable/high_achiver_icon"/>
-        <item
-            android:id="@+id/dor_logout"
-            android:title="Logout"
-            android:iconTint="#657786"
-            android:icon="@drawable/logout_icon"/>
-        </menu>
-    </item>
-    <item android:title="">
-        <menu>
-        <item
-            android:id="@+id/dor_policy"
-            android:title="Terms &amp; Condition" />
-        <item
-            android:id="@+id/dor_help"
-            android:title="Help Center" />
-        </menu>
-    </item>
+    android:background="#F5F8FA">
+
+    <item
+        android:id="@+id/dor_profile"
+        android:title="Profile"
+        android:iconTint="#657786"
+        android:icon="@drawable/profile" />
+
+    <item
+        android:id="@+id/dor_logout"
+        android:title="Logout"
+        android:iconTint="#657786"
+        android:icon="@drawable/logout_icon" />
+
+
 </menu>
