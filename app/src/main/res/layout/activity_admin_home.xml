@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <ImageView
                     android:id="@+id/logo"
                     android:layout_width="30dp"
@@ -50,7 +49,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="100dp"
-                    android:src="@drawable/pic"
+                    android:src="@drawable/head"
                     android:onClick="ShowPopup" />
             </RelativeLayout>
 
@@ -249,7 +248,7 @@
                         android:layout_height="64dp"
                         android:background="@drawable/circle"
                         android:padding="10dp"
-                        android:src="@drawable/setting">
+                        android:src="@drawable/ic_baseline_group_add_24">
 
                     </ImageView>
 
@@ -257,7 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Setting"
+                        android:text="Create Group"
                         android:layout_marginTop="10dp">
 
                     </TextView>
@@ -274,7 +273,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="set up your account information"
+                        android:text="Create a group for employees "
                         android:padding="5dp">
 
                     </TextView>
@@ -284,6 +283,7 @@
 
 
         </LinearLayout>
+
 
     </LinearLayout>
 

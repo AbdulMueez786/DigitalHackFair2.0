@@ -12,24 +12,12 @@
         android:background="#3DA2D1"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:text="All Chat"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#DFDADA"
-                android:layout_height="wrap_content" />
-
-        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
             app:tabIndicatorColor="@color/white"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@android:color/darker_gray"

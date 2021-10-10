@@ -155,6 +155,7 @@ public class UserAdd extends AppCompatActivity {
                                                 public void onComplete(@NonNull @NotNull Task<Void> task) {
                                                     FirebaseAuth.getInstance().signInWithEmailAndPassword("admin@gmail.com", "123456");
                                                     Toast.makeText(UserAdd.this, "data uploaded", Toast.LENGTH_LONG).show();
+                                                    finish();
                                                 }
                                             });
                                             Toast.makeText(UserAdd.this, "Successfull", Toast.LENGTH_LONG).show();

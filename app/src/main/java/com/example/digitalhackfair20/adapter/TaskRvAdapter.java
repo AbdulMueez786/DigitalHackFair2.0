@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,10 +38,10 @@ public class TaskRvAdapter extends RecyclerView.Adapter<TaskRvAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull final TaskRvAdapter.MyViewHolder holder, final int position) {
 
-
-        //    holder.name.setText(user_ls.get(position).getName());
-        //    holder.email.setText(user_ls.get(position).getEmail());
-
+        holder.task_name.setText(task_ls.get(position).getTitle());
+        holder.task_description.setText(task_ls.get(position).getDescription());
+        holder.task_date.setText(task_ls.get(position).getDue_date());
+        holder.task_time.setText("10/12/2021");
 
     }
 
@@ -99,16 +100,15 @@ public class TaskRvAdapter extends RecyclerView.Adapter<TaskRvAdapter.MyViewHold
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        // TextView name, email;
-        // LinearLayout l1;
-        // CircleImageView user_pic;
+        TextView task_name, task_description, task_date, task_time;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            //   name = itemView.findViewById(R.id.name);
-            //   email = itemView.findViewById(R.id.email);
-            //   user_pic = itemView.findViewById(R.id.user_pic);
-            //   l1 = itemView.findViewById(R.id.l1);
+            task_name = itemView.findViewById(R.id.task_name);
+            task_description = itemView.findViewById(R.id.task_description);
+            task_date = itemView.findViewById(R.id.task_date);
+            task_time = itemView.findViewById(R.id.task_time);
         }
     }
 

@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.UserHome">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -28,6 +27,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/welcome_tv"
@@ -44,7 +44,8 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/logo"
             app:civ_border_color="#FF000000"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="1dp"
+            android:onClick="ShowPopup" />
 
 
     </RelativeLayout>
@@ -108,9 +109,8 @@
                 android:layout_weight="1"
                 android:layout_margin="10dp"
                 android:layout_height="100dp"
-
                 android:background="@drawable/button_yellow"
-                android:text="XYZ"
+                android:text="Help"
                 android:textColor="#000000" />
 
         </LinearLayout>

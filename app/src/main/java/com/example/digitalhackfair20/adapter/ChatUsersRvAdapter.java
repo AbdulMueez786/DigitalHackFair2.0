@@ -46,8 +46,9 @@ public class ChatUsersRvAdapter extends RecyclerView.Adapter<ChatUsersRvAdapter.
 
 
         holder.username.setText(ls.get(position).getName());
-
+        holder.lastmessage.setText(ls.get(position).getPost());
         final user u = ls.get(position);
+
         FirebaseDatabase.getInstance().getReference("UserStatus")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -86,6 +87,7 @@ public class ChatUsersRvAdapter extends RecyclerView.Adapter<ChatUsersRvAdapter.
             public void onClick(View view) {
                 Intent intent = new Intent(c, Chat.class);
                 intent.putExtra("userid", u.getId());
+                intent.putExtra("profile", u.getUser_profile());
                 c.startActivity(intent);
             }
         });

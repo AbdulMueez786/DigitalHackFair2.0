@@ -1,13 +1,19 @@
 package com.example.digitalhackfair20.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.digitalhackfair20.R;
 import com.example.digitalhackfair20.adapter.ChatRvAdapter;
 import com.example.digitalhackfair20.model.message;
+import com.example.digitalhackfair20.model.report;
 import com.example.digitalhackfair20.model.user;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +45,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -62,7 +71,7 @@ public class Chat extends AppCompatActivity {
     private List<message> ls;
     private String userid = "";
     private EditText text_send;
-    private ImageView btn_send, btn_send_task;
+    private ImageView btn_send, btn_send_task, report;
     private int request_code = 200;
     private Uri selectedImage_uri = null;
     private String message_Type = "text";
@@ -70,6 +79,8 @@ public class Chat extends AppCompatActivity {
     private FirebaseUser current_user;
     private String path;
     private List<String> badwordList;
+    Dialog badwordDialog;
+    Button understandButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +89,64 @@ public class Chat extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        report = findViewById(R.id.report);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetDialog b = new BottomSheetDialog(
+                        Chat.this, R.style.BottomSheetDialogTheme
+                );
+                View bv = LayoutInflater.from(getApplicationContext()).inflate(
+                        R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.bottomSheetContainer)
+                );
+                String pic = intent.getStringExtra("profile");
+                RoundedImageView i = bv.findViewById(R.id.user_pic);
+                TextView user_name = bv.findViewById(R.id.user_name);
+                TextView user_phone_no = bv.findViewById(R.id.user_phone_no);
+                TextView user_gender = bv.findViewById(R.id.user_gender);
+                EditText report_text = bv.findViewById(R.id.report_text);
+
+                FirebaseDatabase.getInstance().getReference("users").child(userid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        user u = dataSnapshot.getValue(user.class);
+                        user_name.setText(u.getName());
+                        user_phone_no.setText(u.getEmail());
+                        user_gender.setText(u.getGender());
+                        if (u.getUser_profile().equals("default") != true) {
+                            Picasso.get().load(u.getUser_profile())
+                                    .into(i);
+                        } else {
+                            Picasso.get().load(u.getUser_profile())
+                                    .into(i);
+                        }
+                        readmessage(fuser.getUid(), userid, u.getUser_profile());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                bv.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println(" --------------------------------------- ");
+                        String key = FirebaseDatabase.getInstance().getReference("report").push().getKey();
+                        FirebaseDatabase.getInstance().getReference("report").child(key).setValue(
+                                new report(key, pic, user_name.getText().toString(), "", userid, FirebaseAuth.getInstance().getCurrentUser().getUid().toString()
+                                        , report_text.getText().toString()));
+
+                    }
+                });
+                b.setContentView(bv);
+                b.show();
+            }
+        });
+
+        badwordDialog = new Dialog(this);
         current_user = FirebaseAuth.getInstance().getCurrentUser();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -119,10 +188,10 @@ public class Chat extends AppCompatActivity {
                 if (!msg.equals("")) {
                     message_Type = "text";
                     sendmessage(fuser.getUid(), userid, msg);
+                    checkMessageForBadWords();
                 } else if (message_Type.matches("Image")) {
                     sendmessage(fuser.getUid(), userid, selectedImage_uri.toString());
                 } else {
-
 
                 }
                 text_send.setText("");
@@ -155,7 +224,10 @@ public class Chat extends AppCompatActivity {
         btn_send_task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String msg = text_send.getText().toString();
                 message_Type = "task";
+                sendmessage(fuser.getUid(), userid, msg);
+                checkMessageForBadWords();
             }
         });
         badwordList = new ArrayList<String>();
@@ -223,9 +295,10 @@ public class Chat extends AppCompatActivity {
         }
     }
 
-    public void checkMessageForBadWords(View view) {
+    public void checkMessageForBadWords() {
         boolean badwordFound = false;
         String message = text_send.getText().toString();
+        System.out.println(message);
         String[] spl = message.split(" ");
         for (int x = 0; x < spl.length; x++) {
             for (int y = 0; y < badwordList.size(); y++) {
@@ -238,9 +311,24 @@ public class Chat extends AppCompatActivity {
                 break;
         }
         if (badwordFound)
-            Toast.makeText(getApplicationContext(), "You used a bad word, bad boy!", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(getApplicationContext(), "No bad words, good boy!", Toast.LENGTH_LONG).show();
+            this.ShowNegativePopup();
+
+    }
+
+    private void ShowNegativePopup() {
+        badwordDialog.setContentView(R.layout.negative_popup);
+        understandButton = (Button) badwordDialog.findViewById(R.id.understand_btn);
+        understandButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                badwordDialog.dismiss();
+            }
+        });
+
+        badwordDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        badwordDialog.show();
+
     }
 
     private void sendmessage(String sender, String reciever, final String message) {
@@ -264,8 +352,12 @@ public class Chat extends AppCompatActivity {
 
             ref.child("Chats").child(key).setValue(hm);
             */
+
             String key = ref.child("Chats").push().getKey();
             ref.child("Chats").child(key).setValue(new message(key,
+                    message_Type, message, s.toString(), "unread",
+                    FirebaseAuth.getInstance().getUid(), userid));
+            ref.child("BackupChats").child(key).setValue(new message(key,
                     message_Type, message, s.toString(), "unread",
                     FirebaseAuth.getInstance().getUid(), userid));
 
@@ -412,6 +504,9 @@ public class Chat extends AppCompatActivity {
                             String key = ref.child("Chats").push().getKey();
                             ref.child("Chats").child(key).setValue(new message(key,
                                     message_Type, dp, s.toString(), "unread",
+                                    FirebaseAuth.getInstance().getUid(), userid));
+                            ref.child("BackupChats").child(key).setValue(new message(key,
+                                    message_Type, message, s.toString(), "unread",
                                     FirebaseAuth.getInstance().getUid(), userid));
                             /*
                             HashMap<String, Object> hm = new HashMap<>();

@@ -8,7 +8,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.digitalhackfair20.R;
 import com.example.digitalhackfair20.adapter.ViewPagerAdapter;
-import com.example.digitalhackfair20.fragment.Calls;
 import com.example.digitalhackfair20.fragment.Chat;
 import com.example.digitalhackfair20.fragment.GroupChat;
 import com.google.android.material.tabs.TabLayout;
@@ -38,7 +37,7 @@ public class ChatHome extends AppCompatActivity {
                 System.out.println("Heeeeeelllllllllllllllll");
                 viewPagerAdapter.addFragment(Chat.getInstance(), "CHATS");
                 viewPagerAdapter.addFragment(GroupChat.getInstance(), "GROUP CHATS");
-                viewPagerAdapter.addFragment(Calls.getInstance(), "CALLS");
+                //viewPagerAdapter.addFragment(Calls.getInstance(), "CALLS");
 
                 viewPager.setAdapter(viewPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);

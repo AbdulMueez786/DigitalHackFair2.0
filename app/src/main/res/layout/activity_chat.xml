@@ -65,6 +65,14 @@
                         android:textSize="11dp"
                         android:text="last seen today at 9:00am" />
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/report"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/report_icon"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="18dp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 

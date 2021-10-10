@@ -6,22 +6,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.digitalhackfair20.R;
-import com.example.digitalhackfair20.model.task;
+import com.example.digitalhackfair20.model.report;
+import com.example.digitalhackfair20.model.user;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ReportRvAdapter extends RecyclerView.Adapter<ReportRvAdapter.MyViewHolder> implements Filterable {
-    List<task> report_ls;
-    private List<task> report_ls_copy;
+    List<report> report_ls;
+    private List<report> report_ls_copy;
     Context c;
 
-    public ReportRvAdapter(List<task> ls, Context c) {
+    public ReportRvAdapter(List<report> ls, Context c) {
         this.c = c;
         this.report_ls = ls;
         this.report_ls_copy = new ArrayList<>(ls);//copy of our main list
@@ -37,9 +48,31 @@ public class ReportRvAdapter extends RecyclerView.Adapter<ReportRvAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull final ReportRvAdapter.MyViewHolder holder, final int position) {
 
+        FirebaseDatabase.getInstance().
+                getReference("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot1) {
+                for (DataSnapshot snapshot1 : dataSnapshot1.getChildren()) {
+                    user u = snapshot1.getValue(user.class);
+                    if (u.getId().matches(report_ls.get(position).getCriminal_id())) {
+                        holder.username.setText(u.getName());
+                    }
+                    if (u.getId().matches(report_ls.get(position).getVictim_id())) {
+                        holder.reported_by.setText(u.getName());
+                    }
 
-        //    holder.name.setText(user_ls.get(position).getName());
-        //    holder.email.setText(user_ls.get(position).getEmail());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+        Picasso.get().load(report_ls.get(position).getProfile())
+                .into(holder.profile);
+        holder.report_message.setText(report_ls.get(position).getDetail());
 
 
     }
@@ -50,7 +83,7 @@ public class ReportRvAdapter extends RecyclerView.Adapter<ReportRvAdapter.MyView
     }
 
     public void addlist() {
-        report_ls_copy = new ArrayList<task>(report_ls);
+        report_ls_copy = new ArrayList<report>(report_ls);
     }
 
 
@@ -64,7 +97,7 @@ public class ReportRvAdapter extends RecyclerView.Adapter<ReportRvAdapter.MyView
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<task> filteredList = new ArrayList<>();
+            List<report> filteredList = new ArrayList<>();
 
             System.out.println("Hjhjfhjsdhjsfdh" + constraint);
 
@@ -75,10 +108,10 @@ public class ReportRvAdapter extends RecyclerView.Adapter<ReportRvAdapter.MyView
             } else {
                 System.out.println("Else Block");
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (task item : report_ls_copy) {
+                for (report item : report_ls_copy) {
                     System.out.println(filterPattern);
                     System.out.println("");
-                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                    if (item.getDetail().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -99,19 +132,17 @@ public class ReportRvAdapter extends RecyclerView.Adapter<ReportRvAdapter.MyView
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        // TextView name, email;
-        // LinearLayout l1;
-        // CircleImageView user_pic;
+        private CircleImageView profile;
+        private TextView username, report_message, reported_by;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            //name = itemView.findViewById(R.id.name);
-            //email = itemView.findViewById(R.id.email);
-            //user_pic = itemView.findViewById(R.id.user_pic);
-            //l1 = itemView.findViewById(R.id.l1);
+            profile = itemView.findViewById(R.id.profile);
+            username = itemView.findViewById(R.id.username);
+            report_message = itemView.findViewById(R.id.report_message);
+            reported_by = itemView.findViewById(R.id.reported_by);
         }
     }
-
 }
 
 

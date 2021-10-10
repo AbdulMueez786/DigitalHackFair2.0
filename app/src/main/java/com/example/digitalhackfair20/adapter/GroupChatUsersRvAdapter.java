@@ -44,7 +44,7 @@ public class GroupChatUsersRvAdapter extends RecyclerView.Adapter<GroupChatUsers
 
 
         holder.username.setText(ls.get(position).getName());
-
+        holder.lastmessage.setText(ls.get(position).getDescription());
         final Group u = ls.get(position);
         /*
         FirebaseDatabase.getInstance().getReference("UserStatus")

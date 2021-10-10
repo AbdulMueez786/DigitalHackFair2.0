@@ -17,7 +17,10 @@ import com.example.digitalhackfair20.R;
 import com.example.digitalhackfair20.model.message;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -71,6 +74,7 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
             holder.show_time.setVisibility(View.VISIBLE);
             holder.show_message.setText(chat.getText());
             holder.show_time.setText(chat.getTime());
+
         } else {
             holder.show_time.setVisibility(View.GONE);
             holder.time.setVisibility(View.VISIBLE);
@@ -142,23 +146,22 @@ public class GroupChatAdapter extends RecyclerView.Adapter<GroupChatAdapter.View
         });
 
 
-        //if (ls.get(position).getId().equals(fuser.getUid()) != true) {
-        //if (image_url.equals("default") != true) {
-        //System.out.println("+++++++++++++++++++++++++++++++++++++++++" + ls.get(position).getReceiver());
-        //FirebaseDatabase.getInstance().getReference("users")
-        //        .child(chat.getSender()).addValueEventListener(new ValueEventListener() {
-        //    @Override
-        //    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        //        Picasso.get().load(dataSnapshot.child("user_profile").getValue(String.class))
-        //                .into(holder.profile_image);
-        //    }
+        if (ls.get(position).getSender_id().equals(fuser.getUid()) != true) {
+            //if (image_url.equals("default") != true) {
+            //System.out.println("+++++++++++++++++++++++++++++++++++++++++" + ls.get(position).getReceiver());
+            FirebaseDatabase.getInstance().getReference("users")
+                    .child(chat.getSender_id()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Picasso.get().load(dataSnapshot.child("user_profile").getValue(String.class))
+                            .into(holder.profile_image);
+                }
 
-        //    @Override
-        //    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        //    }
-        //});
-        // } else {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        } //else {
         //    Picasso.get().load(R.drawable.user)
         //            .into(holder.profile_image);
         //}

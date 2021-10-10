@@ -10,7 +10,7 @@
         android:id="@+id/animation_view"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:lottie_fileName="21290-colleague.json"
+        app:lottie_fileName="17475-telenor-propeller.json"
         android:layout_centerInParent="true"
         app:lottie_autoPlay="true" />
 

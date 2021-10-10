@@ -9,6 +9,7 @@ import android.widget.PopupMenu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.digitalhackfair20.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminHome extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
@@ -19,8 +20,14 @@ public class AdminHome extends AppCompatActivity implements PopupMenu.OnMenuItem
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.dor_profile:
+                Intent intent = new Intent(AdminHome.this, AdminProfile.class);
+                startActivity(intent);
                 break;
             case R.id.dor_logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(AdminHome.this, SignIn.class);
+                startActivity(i);
+                finish();
                 break;
             default:
                 return false;
@@ -29,33 +36,12 @@ public class AdminHome extends AppCompatActivity implements PopupMenu.OnMenuItem
     }
 
     public void ShowPopup(View v) {
-        System.out.println("99999999999999999999999999999999999999");
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.main);
         popup.show();
     }
 
-    /*
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.main, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.dor_profile:
-                    break;
-                case R.id.dor_logout:
-                    break;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
-    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +52,6 @@ public class AdminHome extends AppCompatActivity implements PopupMenu.OnMenuItem
         reports = findViewById(R.id.reports);
         setting = findViewById(R.id.setting);
 
-        //UserProfile.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //   public void onClick(View view) {
-        //ShowPopup(R.menu.main);
-        //Intent intent = new Intent(AdminHome.this, AdminProfile.class);
-        //startActivity(intent);
-        //   }
-        //});
 
         users.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,19 +63,22 @@ public class AdminHome extends AppCompatActivity implements PopupMenu.OnMenuItem
         tasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(AdminHome.this, Tasks.class);
+                startActivity(intent);
             }
         });
         reports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(AdminHome.this, Reports.class);
+                startActivity(intent);
             }
         });
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(AdminHome.this, create_group.class);
+                startActivity(intent);
             }
         });
 

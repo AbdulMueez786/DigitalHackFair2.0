@@ -48,7 +48,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Login to Continue "
+        android:text="Click to Continue "
         android:textStyle="bold"
         android:textSize="20sp"
         android:backgroundTint="#FFFF"

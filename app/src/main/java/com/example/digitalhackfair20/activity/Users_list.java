@@ -1,5 +1,6 @@
 package com.example.digitalhackfair20.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.digitalhackfair20.R;
 import com.example.digitalhackfair20.adapter.UsersRvAdapter;
 import com.example.digitalhackfair20.model.user;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +48,14 @@ public class Users_list extends AppCompatActivity {
         list_rv.setLayoutManager(lm);
         list_rv.setAdapter(list_adapter);
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Users_list.this, UserAdd.class);
+                startActivity(intent);
+            }
+        });
 
         this.USER = FirebaseAuth.getInstance().getCurrentUser();
         this.searchbar_profile = findViewById(R.id.searchbar_profile);

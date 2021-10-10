@@ -33,7 +33,7 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.ViewHolder
     public static final int msg_type_left = 0;
 
     public static final int msg_type_right = 1;
-
+   
 
     private Context c;
     private List<message> ls;
@@ -55,9 +55,7 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.ViewHolder
         } else {
             View view = LayoutInflater.from(c).inflate(R.layout.chat_item_left, parent, false);
             return new ChatRvAdapter.ViewHolder(view);
-
         }
-
     }
 
     @Override
@@ -77,13 +75,12 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.ViewHolder
             holder.l.setVisibility(View.GONE);
 
             holder.task_ll.setVisibility(View.GONE);
-            
-            holder.task_ll.setVisibility(View.GONE);
             holder.task.setText(chat.getText());
             holder.task_date.setText("09/10/2021");
             holder.task_date.setText(chat.getTime());
 
         } else if (ls.get(position).getType().matches("task") == true) {
+
             holder.show_message.setVisibility(View.GONE);
             holder.show_image.setVisibility(View.GONE);
             holder.time.setVisibility(View.GONE);
@@ -110,10 +107,10 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.ViewHolder
                     .into(holder.show_image);
 
             holder.task_ll.setVisibility(View.GONE);
-            holder.task_ll.setVisibility(View.GONE);
             holder.task.setText(chat.getText());
             holder.task_date.setText("09/10/2021");
             holder.task_date.setText(chat.getTime());
+
         }
 
         holder.show_message.setOnLongClickListener(new View.OnLongClickListener() {
@@ -213,6 +210,11 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            task = itemView.findViewById(R.id.task);
+            task_date = itemView.findViewById(R.id.task_date);
+            task_time = itemView.findViewById(R.id.task_time);
+
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
             show_image = itemView.findViewById(R.id.show_image);
@@ -220,6 +222,7 @@ public class ChatRvAdapter extends RecyclerView.Adapter<ChatRvAdapter.ViewHolder
             show_time = itemView.findViewById(R.id.show_time);
             l = itemView.findViewById(R.id.l);
             task_ll = itemView.findViewById(R.id.task_ll);
+
         }
     }
 
